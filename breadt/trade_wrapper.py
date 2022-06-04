@@ -15,3 +15,12 @@ class Trader:
 
     def order(self, bar, symbol, price, quanty):
         self.trader.order(bar, symbol, price, quanty, self.accounttype, self.accountid)
+
+    def get_avaliable(self, datatype):
+        return self.trader.get_avaliable(self.accountid, datatype)
+
+    def get_balance(self, datatype):
+        return self.trader.get_balance(self.accountid, datatype)
+
+    def get_holdings(self, datatype):
+        return self.trader.get_holdings(self.accountid, datatype)

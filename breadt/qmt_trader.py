@@ -113,3 +113,26 @@ class QMTTrader:
                 orders.append(ocontract)
 
         return orders
+
+    def get_avaliable(self, accountid, datatype):
+        result = 0
+        resultlist = self.get_trade_detail_data(accountid, datatype, "ACCOUNT")
+        for obj in resultlist:
+            result = obj.m_dAvailable
+        return result
+
+    def get_balance(self, accountid, datatype):
+        result = 0
+        resultlist = self.get_trade_detail_data(accountid, datatype, "ACCOUNT")
+        for obj in resultlist:
+            result = obj.m_dBalance
+        return result
+
+    def get_holdings(self, accountid, datatype):
+        holdinglist = {}
+        resultlist = self.get_trade_detail_data(accountid, datatype, "POSITION")
+        for obj in resultlist:
+            holdinglist[
+                obj.m_strInstrumentID + "." + obj.m_strExchangeID
+            ] = obj.m_nCanUseVolume
+        return holdinglist
