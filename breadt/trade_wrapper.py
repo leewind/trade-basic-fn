@@ -14,4 +14,4 @@ class Trader:
         return self.get_order(self, self.accountid, self.accounttype, stock, direction)
 
     def order(self, bar, symbol, price, quanty):
-        self.order(bar, symbol, price, quanty, self.accounttype, self.accountid)
+        self.trader.order(bar, symbol, price, quanty, self.accounttype, self.accountid)
