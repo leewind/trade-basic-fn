@@ -114,23 +114,23 @@ class QMTTrader:
 
         return orders
 
-    def get_avaliable(self, accountid, datatype):
+    def get_avaliable(self, accountid, accounttype):
         result = 0
-        resultlist = self.get_trade_detail_data(accountid, datatype, "ACCOUNT")
+        resultlist = self.get_trade_detail_data(accountid, accounttype, "ACCOUNT")
         for obj in resultlist:
             result = obj.m_dAvailable
         return result
 
-    def get_balance(self, accountid, datatype):
+    def get_balance(self, accountid, accounttype):
         result = 0
-        resultlist = self.get_trade_detail_data(accountid, datatype, "ACCOUNT")
+        resultlist = self.get_trade_detail_data(accountid, accounttype, "ACCOUNT")
         for obj in resultlist:
             result = obj.m_dBalance
         return result
 
-    def get_holdings(self, accountid, datatype):
+    def get_holdings(self, accountid, accounttype):
         holdinglist = {}
-        resultlist = self.get_trade_detail_data(accountid, datatype, "POSITION")
+        resultlist = self.get_trade_detail_data(accountid, accounttype, "POSITION")
         for obj in resultlist:
             holdinglist[
                 obj.m_strInstrumentID + "." + obj.m_strExchangeID
