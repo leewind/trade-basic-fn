@@ -4,8 +4,48 @@ import datetime
 
 
 class QMTTrader:
-    def __init__(self, get_trade_detail_data) -> None:
+    def __init__(self, ContextInfo, get_trade_detail_data, passorder) -> None:
         self.get_trade_detail_data = get_trade_detail_data
+        self.passorder = passorder
+        self.ct = ContextInfo
+
+    def order(self, bar, symbol, price, quanty, account_type, account_id):
+        if self.account_type == "STOCK":
+            self.order_impl(bar, symbol, price, quanty)
+        elif self.account_type == "CREDIT":
+            self.credit_order_impl(bar, symbol, price, quanty)
+
+    def order_impl(self, bar, symbol, price, quanty, account_id):
+        logger.info(
+            "交易提交: {} price:{}, quanty:{}, symbol:{}, accountid:{}".format(
+                symbol, price, quanty, symbol, account_id
+            )
+        )
+
+        opType = 23
+        if quanty < 0:
+            opType = 24
+
+        self.passorder(
+            opType, 1101, account_id, symbol, 14, -1, abs(quanty), 1, self.ct
+        )
+        logger.info("stock单次交易提交完成，已被接收")
+
+    def credit_order_impl(self, bar, symbol, price, quanty, account_id):
+        logger.info(
+            "交易提交: {} price:{}, quanty:{}, symbol:{}, accountid:{}".format(
+                symbol, price, quanty, symbol, account_id
+            )
+        )
+
+        opType = 33
+        if quanty < 0:
+            opType = 34
+
+        self.passorder(
+            opType, 1101, account_id, symbol, 14, -1, abs(quanty), 1, self.ct
+        )
+        logger.info("credit单次交易提交完成，已被接收")
 
     def parse_direction(self, direction):
         if direction == 48:
