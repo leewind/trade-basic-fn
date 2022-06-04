@@ -1,5 +1,5 @@
 from loguru import logger
-from ..base import *
+from .trading_system_basic import *
 import datetime
 
 
