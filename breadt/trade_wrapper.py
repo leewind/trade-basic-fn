@@ -24,3 +24,6 @@ class Trader:
 
     def get_holdings(self):
         return self.trader.get_holdings(self.accountid, self.accounttype)
+
+    def get_position(self, symbol):
+        return self.trader.get_position(self.accountid, self.accounttype, symbol)

@@ -94,9 +94,9 @@ class QMTTrader:
 
         return account
 
-    def get_deal(self, accountid, accounttype, stock, direction):
+    def get_deal(self, accountid, accounttype, symbol, direction):
         deal_info = self.get_trade_detail_data(accountid, accounttype, "deal")
-        code = stock["symbol"].split(".")[0]
+        code = symbol.split(".")[0]
 
         contracts = []
         for deal in deal_info:
@@ -115,9 +115,9 @@ class QMTTrader:
 
         return contracts
 
-    def get_order(self, accountid, accounttype, stock, direction):
+    def get_order(self, accountid, accounttype, symbol, direction):
         order_info = self.get_trade_detail_data(accountid, accounttype, "order")
-        code = stock["symbol"].split(".")[0]
+        code = symbol.split(".")[0]
 
         orders = []
         for order in order_info:
@@ -165,3 +165,13 @@ class QMTTrader:
                 obj.m_strInstrumentID + "." + obj.m_strExchangeID
             ] = obj.m_nCanUseVolume
         return holdinglist
+
+    def get_position(self, accountid, accounttype, symbol):
+        resultlist = self.get_trade_detail_data(accountid, accounttype, "position")
+        code = symbol.split(".")[0]
+
+        for position in resultlist:
+            if position.m_strInstrumentID == code:
+                return position.m_nCanUseVolume
+
+        return 0
