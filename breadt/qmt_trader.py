@@ -1,6 +1,28 @@
 from loguru import logger
 from .trading_system_basic import *
 import datetime
+from enum import Enum
+
+
+class QMTSignalDirect(Enum):
+    BUY = 48
+    SELL = 49
+
+
+class QMTStockTrade(Enum):
+    BUY = 23  # 股票买入，或沪港通、深港通股票买入
+    SELL = 24  # 股票卖出，或沪港通、深港通股票卖出
+
+
+class QMTCreditTrade(Enum):
+    CREDICT_BUY = 27  # 融资买入
+    CREDICT_SELL = 28  # 融券卖出
+    BUY_FOR_RETURN_STOCK = 29  # 买券还券
+    DIRECT_FOR_RETURN_STOCK = 30  # 直接还券
+    SELL_FOR_RETURN_MONEY = 31  # 卖券还款
+    DIRECT_FOR_RETURN_MONEY = 32  # 直接还款
+    CREDICT_CASH_BUY = 33  # 信用账号股票买入
+    CREDICT_SIMPLY_SELL = 34  # 信用账号股票卖出
 
 
 class QMTTrader:
@@ -9,11 +31,13 @@ class QMTTrader:
         self.passorder = passorder
         self.ct = ContextInfo
 
-    def order(self, bar, symbol, price, quanty, account_type, account_id):
+    def order(
+        self, bar, symbol, price, quanty, account_type, account_id, is_debt_buy=False
+    ):
         if account_type == "STOCK":
             self.order_impl(bar, symbol, price, quanty, account_id)
         elif account_type == "CREDIT":
-            self.credit_order_impl(bar, symbol, price, quanty, account_id)
+            self.credit_order_impl(bar, symbol, price, quanty, account_id, is_debt_buy)
 
     def order_impl(self, bar, symbol, price, quanty, account_id):
         logger.info(
@@ -22,28 +46,33 @@ class QMTTrader:
             )
         )
 
-        opType = 23
+        opType = QMTStockTrade.BUY
         if quanty < 0:
-            opType = 24
+            opType = QMTStockTrade.SELL
 
         self.passorder(
-            opType, 1101, account_id, symbol, 14, -1, abs(quanty), 1, self.ct
+            opType.value, 1101, account_id, symbol, 14, -1, abs(quanty), 1, self.ct
         )
         logger.info("stock单次交易提交完成，已被接收")
 
-    def credit_order_impl(self, bar, symbol, price, quanty, account_id):
+    def credit_order_impl(self, bar, symbol, price, quanty, account_id, is_debt_buy):
         logger.info(
             "交易提交: {} price:{}, quanty:{}, symbol:{}, accountid:{}".format(
                 symbol, price, quanty, symbol, account_id
             )
         )
 
-        opType = 33
+        opType = (
+            QMTCreditTrade.CREDICT_CASH_BUY
+            if not is_debt_buy
+            else QMTCreditTrade.CREDICT_BUY
+        )
+
         if quanty < 0:
-            opType = 34
+            opType = QMTCreditTrade.CREDICT_SIMPLY_SELL
 
         self.passorder(
-            opType, 1101, account_id, symbol, 14, -1, abs(quanty), 1, self.ct
+            opType.value, 1101, account_id, symbol, 14, -1, abs(quanty), 1, self.ct
         )
         logger.info("credit单次交易提交完成，已被接收")
 
