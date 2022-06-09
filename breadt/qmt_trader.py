@@ -90,7 +90,6 @@ class QMTTrader:
             logger.error("未获取账号信息")
             return None
 
-        logger.debug(acct_info[0].m_dAvailable)
         account = BreadtAccount(acct_info[0].m_dAvailable)
 
         return account
