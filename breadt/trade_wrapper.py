@@ -8,10 +8,10 @@ class Trader:
         return self.trader.get_account(self.accountid, self.accounttype)
 
     def get_deal(self, stock, direction):
-        return self.get_deal(self.accountid, self.accounttype, stock, direction)
+        return self.trader.get_deal(self.accountid, self.accounttype, stock, direction)
 
     def get_order(self, stock, direction):
-        return self.get_order(self.accountid, self.accounttype, stock, direction)
+        return self.trader.get_order(self.accountid, self.accounttype, stock, direction)
 
     def order(self, bar, symbol, price, quanty):
         self.trader.order(bar, symbol, price, quanty, self.accounttype, self.accountid)
