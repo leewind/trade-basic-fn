@@ -90,7 +90,7 @@ class QMTTrader:
             logger.error("未获取账号信息")
             return None
 
-        account = BreadtAccount(acct_info[0].m_dEnableBailBalance)
+        account = BreadtAccount(acct_info[0].m_dAvailable)
 
         return account
 
