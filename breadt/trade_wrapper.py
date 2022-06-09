@@ -13,8 +13,16 @@ class Trader:
     def get_order(self, stock, direction):
         return self.trader.get_order(self.accountid, self.accounttype, stock, direction)
 
-    def order(self, bar, symbol, price, quanty):
-        self.trader.order(bar, symbol, price, quanty, self.accounttype, self.accountid)
+    def order(self, bar, symbol, price, quanty, is_debt_buy=False):
+        self.trader.order(
+            bar,
+            symbol,
+            price,
+            quanty,
+            self.accounttype,
+            self.accountid,
+            is_debt_buy=is_debt_buy,
+        )
 
     def get_avaliable(self):
         return self.trader.get_avaliable(self.accountid, self.accounttype)
