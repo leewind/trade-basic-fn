@@ -10,9 +10,10 @@ class QMTTrader:
         self.ct = ContextInfo
 
     def order(self, bar, symbol, price, quanty, account_type, account_id):
-        if account_type == "STOCK":
+        logger.info("QMTTrader接收下单信息进行交易 {}".format(account_type))
+        if account_type.upper() == "STOCK":
             self.order_impl(bar, symbol, price, quanty, account_id)
-        elif account_type == "CREDIT":
+        elif account_type.upper() == "CREDIT":
             self.credit_order_impl(bar, symbol, price, quanty, account_id)
 
     def order_impl(self, bar, symbol, price, quanty, account_id):

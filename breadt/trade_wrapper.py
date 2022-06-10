@@ -1,3 +1,6 @@
+from loguru import logger
+
+
 class Trader:
     def __init__(self, trader, accountid, accounttype) -> None:
         self.trader = trader
@@ -14,6 +17,7 @@ class Trader:
         return self.get_order(self, self.accountid, self.accounttype, stock, direction)
 
     def order(self, bar, symbol, price, quanty):
+        logger.info("TraderWrapp接收到下单请求")
         self.trader.order(bar, symbol, price, quanty, self.accounttype, self.accountid)
 
     def get_avaliable(self):
