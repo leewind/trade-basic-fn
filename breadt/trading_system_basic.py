@@ -124,12 +124,12 @@ class BreadtTradeOrder:
 
 
 class BreadtTradeContract:
-    def __init__(self, order_id, symbol, direct, price, traded, untraded, dt) -> None:
+    def __init__(self, order_id, symbol, direct, price, traded, total, dt) -> None:
         self.order_id = order_id
         self.symbol = symbol
         self.price = price
         self.traded = traded
-        self.untraded = untraded
+        self.total = total
         self.direct = direct
         self.dt = dt
 
