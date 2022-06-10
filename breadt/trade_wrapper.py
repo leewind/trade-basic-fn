@@ -11,14 +11,22 @@ class Trader:
         return self.trader.get_account(self.accountid, self.accounttype)
 
     def get_deal(self, stock, direction):
-        return self.get_deal(self.accountid, self.accounttype, stock, direction)
+        return self.trader.get_deal(self.accountid, self.accounttype, stock, direction)
 
     def get_order(self, stock, direction):
-        return self.get_order(self, self.accountid, self.accounttype, stock, direction)
+        return self.trader.get_order(self.accountid, self.accounttype, stock, direction)
 
-    def order(self, bar, symbol, price, quanty):
+    def order(self, bar, symbol, price, quanty, is_debt_buy=False):
         logger.info("TraderWrapp接收到下单请求")
-        self.trader.order(bar, symbol, price, quanty, self.accounttype, self.accountid)
+        self.trader.order(
+            bar,
+            symbol,
+            price,
+            quanty,
+            self.accounttype,
+            self.accountid,
+            is_debt_buy=is_debt_buy,
+        )
 
     def get_avaliable(self):
         return self.trader.get_avaliable(self.accountid, self.accounttype)
