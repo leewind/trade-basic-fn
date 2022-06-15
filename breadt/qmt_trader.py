@@ -109,7 +109,7 @@ class QMTTrader:
                     deal.m_nVolume,
                     datetime.datetime.strptime(
                         deal.m_strTradeDate + " " + deal.m_strTradeTime,
-                        "%Y%m%d %H:%M:%S",
+                        "%Y%m%d %H%M%S",
                     ),
                 )
                 contracts.append(odeal)
