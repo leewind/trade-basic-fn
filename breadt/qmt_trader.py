@@ -137,7 +137,7 @@ class QMTTrader:
                     order.m_nVolumeTotalOriginal,
                     datetime.datetime.strptime(
                         order.m_strInsertDate + " " + order.m_strInsertTime,
-                        "%Y%m%d %H:%M:%S",
+                        "%Y%m%d %H%M%S",
                     ),
                 )
                 orders.append(ocontract)
