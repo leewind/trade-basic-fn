@@ -34,9 +34,10 @@ class QMTTrader:
     def order(
         self, bar, symbol, price, quanty, account_type, account_id, is_debt_buy=False
     ):
-        if account_type == "STOCK":
+        logger.info("QMTTrader 接收到下单信息 {}".format(account_type))
+        if account_type.upper() == "STOCK":
             self.order_impl(bar, symbol, price, quanty, account_id)
-        elif account_type == "CREDIT":
+        elif account_type.upper() == "CREDIT":
             self.credit_order_impl(bar, symbol, price, quanty, account_id, is_debt_buy)
 
     def order_impl(self, bar, symbol, price, quanty, account_id):
@@ -108,7 +109,7 @@ class QMTTrader:
                     deal.m_nVolume,
                     datetime.datetime.strptime(
                         deal.m_strTradeDate + " " + deal.m_strTradeTime,
-                        "%Y%m%d %H:%M:%S",
+                        "%Y%m%d %H%M%S",
                     ),
                 )
                 contracts.append(odeal)
@@ -136,7 +137,7 @@ class QMTTrader:
                     order.m_nVolumeTotalOriginal,
                     datetime.datetime.strptime(
                         order.m_strInsertDate + " " + order.m_strInsertTime,
-                        "%Y%m%d %H:%M:%S",
+                        "%Y%m%d %H%M%S",
                     ),
                 )
                 orders.append(ocontract)
