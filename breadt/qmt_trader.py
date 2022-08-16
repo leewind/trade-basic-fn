@@ -155,7 +155,8 @@ class QMTTrader:
         result = 0
         resultlist = self.get_trade_detail_data(accountid, accounttype, "ACCOUNT")
         for obj in resultlist:
-            result = obj.m_dBalance
+            # result = obj.m_dBalance
+            result = obj.m_dAssureAsset
         return result
 
     def get_holdings(self, accountid, accounttype):
