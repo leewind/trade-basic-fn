@@ -101,10 +101,10 @@ class QMTTrader:
 
         contracts = []
         for deal in deal_info:
-            if deal.m_strInstrumentID == code and deal.m_nDirection == direction:
+            if deal.m_strInstrumentID == code and deal.m_nOffsetFlag == direction:
                 odeal = BreadtTradeOrder(
                     deal.m_strInstrumentID,
-                    self.parse_direction(deal.m_nDirection),
+                    self.parse_direction(deal.m_nOffsetFlag),
                     deal.m_dPrice,
                     deal.m_nVolume,
                     datetime.datetime.strptime(
@@ -125,13 +125,13 @@ class QMTTrader:
 
             if (
                 order.m_strInstrumentID == code
-                and order.m_nDirection == direction
+                and order.m_nOffsetFlag == direction
                 and order.m_nOrderStatus in [50, 51, 52, 53, 54, 55, 56]
             ):
                 ocontract = BreadtTradeContract(
                     order.m_strOrderSysID,
                     order.m_strInstrumentID,
-                    self.parse_direction(order.m_nDirection),
+                    self.parse_direction(order.m_nOffsetFlag),
                     order.m_dTradedPrice,
                     order.m_nVolumeTraded,
                     order.m_nVolumeTotalOriginal,
