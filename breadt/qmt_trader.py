@@ -140,6 +140,7 @@ class QMTTrader:
                         order.m_strInsertDate + " " + order.m_strInsertTime,
                         "%Y%m%d %H%M%S",
                     ),
+                    order.m_nOrderStatus
                 )
                 orders.append(ocontract)
 

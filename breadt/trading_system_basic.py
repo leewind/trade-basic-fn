@@ -124,7 +124,7 @@ class BreadtTradeOrder:
 
 
 class BreadtTradeContract:
-    def __init__(self, order_id, symbol, direct, price, traded, total, dt) -> None:
+    def __init__(self, order_id, symbol, direct, price, traded, total, dt, status) -> None:
         self.order_id = order_id
         self.symbol = symbol
         self.price = price
@@ -132,6 +132,7 @@ class BreadtTradeContract:
         self.total = total
         self.direct = direct
         self.dt = dt
+        self.status = status
 
 
 class BreadtOptionDirect(Enum):
