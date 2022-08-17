@@ -121,6 +121,28 @@ class QMTTrader:
 
         return contracts
 
+    def get_all_orders(self, accountid, accounttype):
+        order_info = self.get_trade_detail_data(accountid, accounttype, "order", self.name)
+
+        orders = []
+        for order in order_info:
+            ocontract = BreadtTradeContract(
+                order.m_strOrderSysID,
+                order.m_strInstrumentID,
+                self.parse_direction(order.m_nOffsetFlag),
+                order.m_dTradedPrice,
+                order.m_nVolumeTraded,
+                order.m_nVolumeTotalOriginal,
+                datetime.datetime.strptime(
+                    order.m_strInsertDate + " " + order.m_strInsertTime,
+                    "%Y%m%d %H%M%S",
+                ),
+                order.m_nOrderStatus
+            )
+            orders.append(ocontract)
+
+        return orders
+
     def get_order(self, accountid, accounttype, symbol, direction):
         order_info = self.get_trade_detail_data(accountid, accounttype, "order", self.name)
         code = symbol.split(".")[0]

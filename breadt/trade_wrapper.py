@@ -15,6 +15,9 @@ class Trader:
 
     def get_order(self, stock, direction):
         return self.trader.get_order(self.accountid, self.accounttype, stock, direction)
+    
+    def get_all_orders(self):
+        return self.trader(self.accountid, self.accounttype)
 
     def order(self, bar, symbol, price, quanty, is_debt_buy=False):
         logger.info("TraderWrapp接收到下单请求")
