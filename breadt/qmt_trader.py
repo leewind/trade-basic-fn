@@ -26,10 +26,11 @@ class QMTCreditTrade(Enum):
 
 
 class QMTTrader:
-    def __init__(self, ContextInfo, get_trade_detail_data, passorder) -> None:
+    def __init__(self, ContextInfo, get_trade_detail_data, passorder, name='qmt') -> None:
         self.get_trade_detail_data = get_trade_detail_data
         self.passorder = passorder
         self.ct = ContextInfo
+        self.name = name
 
     def order(
         self, bar, symbol, price, quanty, account_type, account_id, is_debt_buy=False
@@ -52,7 +53,7 @@ class QMTTrader:
             opType = QMTStockTrade.SELL
 
         self.passorder(
-            opType.value, 1101, account_id, symbol, 14, -1, abs(quanty), 1, self.ct
+            opType.value, 1101, account_id, symbol, 14, -1, abs(quanty), self.name, 1, self.ct
         )
         logger.info("stock单次交易提交完成，已被接收")
 
