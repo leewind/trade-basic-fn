@@ -27,6 +27,9 @@ class Trader:
             self.accountid,
             is_debt_buy=is_debt_buy,
         )
+    
+    def cancel(self, order_id):
+        self.trader.cancel(order_id, self.accountid, self.accounttype)
 
     def get_avaliable(self):
         return self.trader.get_avaliable(self.accountid, self.accounttype)
