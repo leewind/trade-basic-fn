@@ -26,9 +26,10 @@ class QMTCreditTrade(Enum):
 
 
 class QMTTrader:
-    def __init__(self, ContextInfo, get_trade_detail_data, passorder, name='qmt') -> None:
+    def __init__(self, ContextInfo, get_trade_detail_data, passorder, cancel=None, name='qmt') -> None:
         self.get_trade_detail_data = get_trade_detail_data
         self.passorder = passorder
+        self.cancel = cancel
         self.ct = ContextInfo
         self.name = name
 
@@ -77,6 +78,9 @@ class QMTTrader:
             opType.value, 1101, account_id, symbol, 14, -1, abs(quanty), 1, self.ct
         )
         logger.info("credit单次交易提交完成，已被接收")
+
+    def cancel(self, orderId, account_id, accountType):
+        self.cancel(orderId, account_id, accountType, self.ct)
 
     def parse_direction(self, direction):
         if direction == 48:
