@@ -97,7 +97,7 @@ class QMTTrader:
         return account
 
     def get_deal(self, accountid, accounttype, symbol, direction):
-        deal_info = self.get_trade_detail_data(accountid, accounttype, "deal")
+        deal_info = self.get_trade_detail_data(accountid, accounttype, "deal", self.name)
         code = symbol.split(".")[0]
 
         contracts = []
@@ -118,7 +118,7 @@ class QMTTrader:
         return contracts
 
     def get_order(self, accountid, accounttype, symbol, direction):
-        order_info = self.get_trade_detail_data(accountid, accounttype, "order")
+        order_info = self.get_trade_detail_data(accountid, accounttype, "order", self.name)
         code = symbol.split(".")[0]
 
         orders = []
