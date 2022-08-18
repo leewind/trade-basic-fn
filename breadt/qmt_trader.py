@@ -26,7 +26,9 @@ class QMTCreditTrade(Enum):
 
 
 class QMTTrader:
-    def __init__(self, ContextInfo, get_trade_detail_data, passorder, cancel=None, name='qmt') -> None:
+    def __init__(
+        self, ContextInfo, get_trade_detail_data, passorder, cancel=None, name="qmt"
+    ) -> None:
         self.get_trade_detail_data = get_trade_detail_data
         self.passorder = passorder
         self.cancel = cancel
@@ -54,7 +56,16 @@ class QMTTrader:
             opType = QMTStockTrade.SELL
 
         self.passorder(
-            opType.value, 1101, account_id, symbol, 14, -1, abs(quanty), self.name, 1, self.ct
+            opType.value,
+            1101,
+            account_id,
+            symbol,
+            14,
+            -1,
+            abs(quanty),
+            self.name,
+            1,
+            self.ct,
         )
         logger.info("stock单次交易提交完成，已被接收")
 
@@ -75,7 +86,16 @@ class QMTTrader:
             opType = QMTCreditTrade.CREDICT_SIMPLY_SELL
 
         self.passorder(
-            opType.value, 1101, account_id, symbol, 14, -1, abs(quanty), 1, self.ct
+            opType.value,
+            1101,
+            account_id,
+            symbol,
+            14,
+            -1,
+            abs(quanty),
+            self.name,
+            1,
+            self.ct,
         )
         logger.info("credit单次交易提交完成，已被接收")
 
@@ -101,7 +121,9 @@ class QMTTrader:
         return account
 
     def get_deal(self, accountid, accounttype, symbol, direction):
-        deal_info = self.get_trade_detail_data(accountid, accounttype, "deal", self.name)
+        deal_info = self.get_trade_detail_data(
+            accountid, accounttype, "deal", self.name
+        )
         code = symbol.split(".")[0]
 
         contracts = []
@@ -122,7 +144,9 @@ class QMTTrader:
         return contracts
 
     def get_all_orders(self, accountid, accounttype):
-        order_info = self.get_trade_detail_data(accountid, accounttype, "order", self.name)
+        order_info = self.get_trade_detail_data(
+            accountid, accounttype, "order", self.name
+        )
 
         orders = []
         for order in order_info:
@@ -137,14 +161,16 @@ class QMTTrader:
                     order.m_strInsertDate + " " + order.m_strInsertTime,
                     "%Y%m%d %H%M%S",
                 ),
-                order.m_nOrderStatus
+                order.m_nOrderStatus,
             )
             orders.append(ocontract)
 
         return orders
 
     def get_order(self, accountid, accounttype, symbol, direction):
-        order_info = self.get_trade_detail_data(accountid, accounttype, "order", self.name)
+        order_info = self.get_trade_detail_data(
+            accountid, accounttype, "order", self.name
+        )
         code = symbol.split(".")[0]
 
         orders = []
@@ -166,7 +192,7 @@ class QMTTrader:
                         order.m_strInsertDate + " " + order.m_strInsertTime,
                         "%Y%m%d %H%M%S",
                     ),
-                    order.m_nOrderStatus
+                    order.m_nOrderStatus,
                 )
                 orders.append(ocontract)
 
