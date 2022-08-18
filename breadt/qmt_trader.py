@@ -36,7 +36,7 @@ class QMTTrader:
     ) -> None:
         self.get_trade_detail_data = get_trade_detail_data
         self.passorder = passorder
-        self.cancel_order = cancel_order
+        self.cancel = cancel_order
         self.ct = ContextInfo
         self.name = name
 
@@ -105,11 +105,11 @@ class QMTTrader:
         logger.info("credit单次交易提交完成，已被接收")
 
     def cancel_order(self, orderId, account_id, accountType):
-        if self.cancel_order is None:
+        if self.cancel is None:
             logger.error("cancel对象没有传入")
             return
 
-        self.cancel_order(orderId, account_id, accountType, self.ct)
+        self.cancel(orderId, account_id, accountType, self.ct)
 
     def parse_direction(self, direction):
         if direction == 48:
