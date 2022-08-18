@@ -31,7 +31,7 @@ class QMTTrader:
         ContextInfo,
         get_trade_detail_data,
         passorder,
-        cancel_order=None,
+        cancel_order,
         name="qmt",
     ) -> None:
         self.get_trade_detail_data = get_trade_detail_data
