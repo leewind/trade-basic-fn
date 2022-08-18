@@ -32,7 +32,7 @@ class Trader:
         )
 
     def cancel(self, order_id):
-        self.trader.cancel_order(order_id, self.accountid, self.accounttype)
+        self.trader.cancel_order(str(order_id), self.accountid, self.accounttype)
 
     def get_avaliable(self):
         return self.trader.get_avaliable(self.accountid, self.accounttype)
