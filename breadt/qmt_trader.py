@@ -2,7 +2,7 @@ from loguru import logger
 from .trading_system_basic import *
 import datetime
 from enum import Enum
-from threadlock import SharedCounter
+from .threadlock import SharedCounter
 
 _fetch_lock = SharedCounter()
 
