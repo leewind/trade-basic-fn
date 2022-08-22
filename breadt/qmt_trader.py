@@ -2,6 +2,9 @@ from loguru import logger
 from .trading_system_basic import *
 import datetime
 from enum import Enum
+from threadlock import SharedCounter
+
+_fetch_lock = SharedCounter()
 
 
 class QMTSignalDirect(Enum):
@@ -43,11 +46,13 @@ class QMTTrader:
     def order(
         self, bar, symbol, price, quanty, account_type, account_id, is_debt_buy=False
     ):
+        _fetch_lock.incr()
         logger.info("QMTTrader 接收到下单信息 {}".format(account_type))
         if account_type.upper() == "STOCK":
             self.order_impl(bar, symbol, price, quanty, account_id)
         elif account_type.upper() == "CREDIT":
             self.credit_order_impl(bar, symbol, price, quanty, account_id, is_debt_buy)
+        _fetch_lock.decr()
 
     def order_impl(self, bar, symbol, price, quanty, account_id):
         logger.info(
@@ -109,7 +114,9 @@ class QMTTrader:
             logger.error("cancel对象没有传入")
             return
 
+        _fetch_lock.incr()
         self.cancel(orderId, account_id, accountType, self.ct)
+        _fetch_lock.decr()
 
     def parse_direction(self, direction):
         if direction == 48:
