@@ -15,6 +15,7 @@ from .trading_system_basic import (
 )
 from .debt import Debt
 from .rabbitmq_connector import RabbitMQConnector
+from .mysql_connector import MysqlConnector
 
 __all__ = [
     "SharedCounter",
@@ -35,4 +36,5 @@ __all__ = [
     "BreadtOptionDirect",
     "BreadtTradeTarget",
     "RabbitMQConnector",
+    "MysqlConnector",
 ]
