@@ -14,6 +14,7 @@ from .trading_system_basic import (
     BreadtTradeTarget,
 )
 from .debt import Debt
+from .rabbitmq_connector import RabbitMQConnector
 
 __all__ = [
     "SharedCounter",
@@ -33,4 +34,5 @@ __all__ = [
     "BreadtTradeContract",
     "BreadtOptionDirect",
     "BreadtTradeTarget",
+    "RabbitMQConnector",
 ]
