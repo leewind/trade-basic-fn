@@ -16,6 +16,7 @@ from .trading_system_basic import (
 from .debt import Debt
 from .rabbitmq_connector import RabbitMQConnector
 from .mysql_connector import MysqlConnector
+from .dingtalk_alert import DingTalkAlert
 
 __all__ = [
     "SharedCounter",
@@ -37,4 +38,5 @@ __all__ = [
     "BreadtTradeTarget",
     "RabbitMQConnector",
     "MysqlConnector",
+    "DingTalkAlert",
 ]
