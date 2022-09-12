@@ -36,9 +36,8 @@ class DingTalkAlert:
             "https://oapi.dingtalk.com/robot/send?access_token=%s&timestamp=%s&sign=%s"
             % (self.access_token, timestamp, sign)
         )
-        # logger.info(url)
 
         headers = {"Content-Type": "application/json"}
 
         data = {"msgtype": "text", "text": {"content": message}}
-        r = requests.post(url, headers=headers, json=data)
+        requests.post(url, headers=headers, json=data)

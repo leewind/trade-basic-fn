@@ -17,6 +17,7 @@ from .debt import Debt
 from .rabbitmq_connector import RabbitMQConnector
 from .mysql_connector import MysqlConnector
 from .dingtalk_alert import DingTalkAlert
+from .stream_data_feed import StreamDataFeed
 
 __all__ = [
     "SharedCounter",
@@ -39,4 +40,5 @@ __all__ = [
     "RabbitMQConnector",
     "MysqlConnector",
     "DingTalkAlert",
+    "StreamDataFeed",
 ]
