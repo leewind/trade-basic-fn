@@ -19,6 +19,7 @@ from .mysql_connector import MysqlConnector
 from .dingtalk_alert import DingTalkAlert
 from .stream_data_feed import StreamDataFeed
 from .fmin import is_after_trading_time, is_in_trading_day, is_in_trading_time
+from .strategy import Strategy
 
 __all__ = [
     "SharedCounter",
@@ -45,4 +46,5 @@ __all__ = [
     "is_after_trading_time",
     "is_in_trading_day",
     "is_in_trading_time",
+    "Strategy"
 ]
