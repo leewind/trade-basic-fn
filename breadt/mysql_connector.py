@@ -3,7 +3,7 @@ import configparser
 
 
 class MysqlConnector:
-    def connect(config_filename):
+    def connect(self, config_filename):
         config = configparser.ConfigParser()
         config.read(config_filename)
 
