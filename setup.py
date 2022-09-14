@@ -6,5 +6,5 @@ setup(
     description="Basic Module For Quant",
     # packages=find_packages(include=["base", "trader"]),
     packages=["breadt"],
-    install_requires=["loguru", "pika", 'pymsql'],
+    install_requires=["loguru", "pika", 'pymysql'],
 )
