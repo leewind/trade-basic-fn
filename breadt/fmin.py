@@ -43,7 +43,7 @@ def read_from_cache(dt) -> pd.DataFrame:
 
 def is_in_trading_day() -> bool:
     ct = datetime.datetime.now()
-    dt = int(ct.strftime("%Y%m%d"))
+    dt = ct.strftime("%Y%m%d")
 
     df = read_from_cache(dt)
 
