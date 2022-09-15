@@ -1,4 +1,5 @@
 from enum import Enum
+import symbol
 
 
 class BreadtAccount:
@@ -143,3 +144,24 @@ class BreadtOptionDirect(Enum):
 class BreadtTradeTarget(Enum):
     ALL = 0
     SINGLE = 1
+
+class BreadtTask:
+    def __init__(self, account, tasktype, symbol, quanty, turnover, time, ttype) -> None:
+        self.account = account
+        self.tasktype = tasktype
+        self.symbol = symbol
+        self.quanty = quanty
+        self.turnover = turnover
+        self.time = time
+        self.ttype = ttype
+
+class BreadtTaskType(Enum):
+    VENDOR = 0
+    MANUAL = 1
+    ALGOBYSIGNAL = 2
+
+class BreadtTaskTimeType(Enum):
+    DAILY = 0
+    DURATION = 1
+    ASAP = 2
+    ALGO = 3
