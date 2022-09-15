@@ -1,6 +1,7 @@
 from enum import Enum
-import symbol
-
+import abc
+from .rabbitmq_connector import RabbitMQConnector
+import json
 
 class BreadtAccount:
     def __init__(self, money) -> None:
@@ -145,15 +146,46 @@ class BreadtTradeTarget(Enum):
     ALL = 0
     SINGLE = 1
 
-class BreadtTask:
-    def __init__(self, account, tasktype, symbol, quanty, turnover, time, ttype) -> None:
+class BreadtTaskStatus(Enum):
+    INIT = 0
+    PROCESS = 1
+    COMPLETED = 2
+
+class BreadtTask(metaclass=abc.ABCMeta):
+    def __init__(self, name, account, tasktype, symbol, quanty, step, time, ttype) -> None:
+        self.name = name
         self.account = account
         self.tasktype = tasktype
         self.symbol = symbol
         self.quanty = quanty
-        self.turnover = turnover
+        self.step = step
         self.time = time
         self.ttype = ttype
+        self.process = 0.0
+        self.status = BreadtTaskStatus.INIT
+    
+    def to_json(self):
+        return {
+           "account": self.account,
+            "tasktype": self.tasktype.name(),
+            "symbol": self.symbol,
+            "quanty": self.quanty,
+            "turnover": self.turnover,
+            "time": self.time,
+            "ttype": self.ttype.name()
+        }
+    
+    @abc.abstractmethod
+    def watch(self) -> None:
+        pass
+
+    @abc.abstractmethod
+    def sync(self) -> None:
+        pass
+
+    def send_mq(self, configfile, exchange, routing_key, info) -> None:
+        connector = RabbitMQConnector(configfile)
+        connector.send_message(exchange, routing_key, json.dumps(info))
 
 class BreadtTaskType(Enum):
     VENDOR = 0
