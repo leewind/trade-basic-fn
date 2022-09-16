@@ -14,7 +14,8 @@ from .trading_system_basic import (
     BreadtTradeTarget,
     BreadtTask,
     BreadtTaskTimeType,
-    BreadtTaskType
+    BreadtTaskType,
+    BreadtTaskStatus,
 )
 from .debt import Debt
 from .rabbitmq_connector import RabbitMQConnector
@@ -54,5 +55,6 @@ __all__ = [
     "TradeExecutor",
     "BreadtTask",
     "BreadtTaskTimeType",
-    "BreadtTaskType"
+    "BreadtTaskType",
+    "BreadtTaskStatus",
 ]
