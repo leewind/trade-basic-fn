@@ -26,6 +26,7 @@ from .fmin import (
     is_after_trading_time,
     is_in_trading_day,
     is_in_trading_time,
+    get_code_volatility,
     get_1m_raw_pressure_and_support,
 )
 from .strategy import Strategy
