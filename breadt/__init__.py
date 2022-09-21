@@ -61,6 +61,7 @@ __all__ = [
     "BreadtTask",
     "BreadtTaskTimeType",
     "BreadtTaskType",
+    "get_code_volatility",
     "BreadtTaskStatus",
     "get_1m_raw_pressure_and_support",
 ]
