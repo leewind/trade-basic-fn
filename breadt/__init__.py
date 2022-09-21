@@ -22,7 +22,12 @@ from .rabbitmq_connector import RabbitMQConnector
 from .mysql_connector import MysqlConnector
 from .dingtalk_alert import DingTalkAlert
 from .stream_data_feed import StreamDataFeed
-from .fmin import is_after_trading_time, is_in_trading_day, is_in_trading_time
+from .fmin import (
+    is_after_trading_time,
+    is_in_trading_day,
+    is_in_trading_time,
+    get_1m_raw_pressure_and_support,
+)
 from .strategy import Strategy
 from .trade_executor import TradeExecutor
 
@@ -57,4 +62,5 @@ __all__ = [
     "BreadtTaskTimeType",
     "BreadtTaskType",
     "BreadtTaskStatus",
+    "get_1m_raw_pressure_and_support",
 ]

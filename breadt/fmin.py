@@ -51,3 +51,27 @@ def is_in_trading_day() -> bool:
         return False
 
     return df[df["cal_date"] == dt].iloc[0]["is_open"] > 0
+
+
+def get_1m_raw_pressure_and_support(df, gap=0.005):
+    p2 = df.groupby("close").agg({"volume": "sum"}).reset_index()
+    p2["datetime"] = p2["volume"]
+    p2["last"] = p2["close"]
+
+    data = []
+    for index, row in p2.sort_values("datetime", ascending=False).iterrows():
+        price = row["last"]
+        count = abs(row["datetime"])
+
+        is_not_in_price_list = True
+        for index in range(0, len(data)):
+            d = data[index]
+            if price <= d["price"] * (1 + gap) and price >= d["price"] * (1 - gap):
+                is_not_in_price_list = False
+                data[index]["datetime"] = data[index]["datetime"] + count
+                break
+
+        if is_not_in_price_list:
+            data.append({"price": price, "datetime": count})
+
+    return data
