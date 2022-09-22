@@ -1,6 +1,7 @@
 from .threadlock import SharedCounter
 from .trade_wrapper import Trader
 from .qmt_trader import QMTSignalDirect, QMTStockTrade, QMTCreditTrade, QMTTrader
+from .qmt_trader_v2 import QMTTraderV2
 from .trading_system_basic import (
     BreadtAccount,
     BreadtBar,
@@ -65,4 +66,5 @@ __all__ = [
     "get_code_volatility",
     "BreadtTaskStatus",
     "get_1m_raw_pressure_and_support",
+    "QMTTraderV2",
 ]

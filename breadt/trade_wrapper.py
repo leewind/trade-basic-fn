@@ -30,6 +30,19 @@ class Trader:
             self.accountid,
             is_debt_buy=is_debt_buy,
         )
+    
+    def order_v2(self, bar, symbol, price, quanty, is_debt_buy=False, name='qmt'):
+        logger.info("TraderWrapp接收到下单请求")
+        self.trader.order(
+            bar,
+            symbol,
+            price,
+            quanty,
+            self.accounttype,
+            self.accountid,
+            is_debt_buy=is_debt_buy,
+            name=name
+        )
 
     def cancel(self, order_id):
         self.trader.cancel_order(str(order_id), self.accountid, self.accounttype)
