@@ -10,7 +10,12 @@ TUSHARE_KEY = "32edd62d8ec424bd141e2992ffd0725c51b246e205115188d1576229"
 ts.set_token(TUSHARE_KEY)
 pro = ts.pro_api()
 
-df_stock_list = pro.stock_basic(exchange='', list_status='L', fields='ts_code,symbol,name,area,industry,list_date')
+df_stock_a_list = pro.stock_basic(exchange='', list_status='L', fields='ts_code,symbol,name,area,industry,list_date')
+df_fund_list = pro.fund_basic(market='E')
+df_fund_list['symbol'] = df_fund_list['ts_code'].apply(lambda item: item.split('.')[0])
+
+df_stock_list = pd.concat([df_stock_a_list[['ts_code', 'symbol']], df_fund_list[['ts_code', 'symbol']]])
+
 
 def check_ts_symbol(symbol):
     m = df_stock_list[df_stock_list['symbol']==symbol]
