@@ -10,6 +10,14 @@ TUSHARE_KEY = "32edd62d8ec424bd141e2992ffd0725c51b246e205115188d1576229"
 ts.set_token(TUSHARE_KEY)
 pro = ts.pro_api()
 
+df_stock_list = pro.stock_basic(exchange='', list_status='L', fields='ts_code,symbol,name,area,industry,list_date')
+
+def check_ts_symbol(symbol):
+    m = df_stock_list[df_stock_list['symbol']==symbol]
+    if m is None or len(m) == 0:
+        return None
+    else:
+        return m.iloc[0]['ts_code']
 
 def is_in_trading_time() -> bool:
     ct = datetime.datetime.now()

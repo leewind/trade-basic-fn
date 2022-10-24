@@ -29,6 +29,7 @@ from .fmin import (
     is_in_trading_time,
     get_code_volatility,
     get_1m_raw_pressure_and_support,
+    check_ts_symbol
 )
 from .strategy import Strategy
 from .trade_executor import TradeExecutor
@@ -67,4 +68,5 @@ __all__ = [
     "BreadtTaskStatus",
     "get_1m_raw_pressure_and_support",
     "QMTTraderV2",
+    "check_ts_symbol"
 ]
