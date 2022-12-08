@@ -18,6 +18,7 @@ class RabbitMQConnector:
                 host=self.config["mq"]["host"],
                 credentials=credentials,
                 virtual_host=self.config["mq"]["vhost"],
+                heartbeat=0,
             )
         )
         channel = connection.channel()
