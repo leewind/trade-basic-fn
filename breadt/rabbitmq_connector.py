@@ -24,7 +24,7 @@ class RabbitMQConnector:
         channel = connection.channel()
         return connection, channel
 
-    def send_message(self, exchange_name, routing_key, context, heartbeat=3) -> None:
+    def send_message(self, exchange_name, routing_key, context, heartbeat=10) -> None:
         self.connection, channel = self._connect(heartbeat)
         channel.basic_publish(
             exchange=exchange_name, routing_key=routing_key, body=context
@@ -32,7 +32,7 @@ class RabbitMQConnector:
 
         self.connection.close()
 
-    def start_consume(self, queue_name, callback, heartbeat=3):
+    def start_consume(self, queue_name, callback, heartbeat=10):
         """
         callback具体返回的参数, 可以参考这个example
         def callback(ch, method, properties, body):
