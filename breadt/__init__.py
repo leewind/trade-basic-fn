@@ -1,6 +1,7 @@
 from .threadlock import SharedCounter
 from .trade_wrapper import Trader
 from .qmt_trader import QMTSignalDirect, QMTStockTrade, QMTCreditTrade, QMTTrader
+from .qmt_trader_v2 import QMTTraderV2
 from .trading_system_basic import (
     BreadtAccount,
     BreadtBar,
@@ -28,9 +29,11 @@ from .fmin import (
     is_in_trading_time,
     get_code_volatility,
     get_1m_raw_pressure_and_support,
+    check_ts_symbol,
 )
 from .strategy import Strategy
 from .trade_executor import TradeExecutor
+from .redis_connector import RedisConnector
 
 __all__ = [
     "SharedCounter",
@@ -65,4 +68,7 @@ __all__ = [
     "get_code_volatility",
     "BreadtTaskStatus",
     "get_1m_raw_pressure_and_support",
+    "QMTTraderV2",
+    "check_ts_symbol",
+    "RedisConnector",
 ]

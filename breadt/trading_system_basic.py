@@ -61,6 +61,9 @@ class BreadSignalOrderStatus(Enum):
     APPLY = 1
     DROP = 2
     SUBMIT = 3
+    PROCESS = 4
+    CLOSE = 5
+    UNKNOWN = 6
 
 
 class BreadtSignalDirect(Enum):
