@@ -178,6 +178,7 @@ class QMTTrader:
                     "%Y%m%d %H%M%S",
                 ),
                 order.m_nOrderStatus,
+                order.m_strRemark,
             )
             orders.append(ocontract)
 
@@ -209,6 +210,7 @@ class QMTTrader:
                         "%Y%m%d %H%M%S",
                     ),
                     order.m_nOrderStatus,
+                    order.m_strRemark,
                 )
                 orders.append(ocontract)
 

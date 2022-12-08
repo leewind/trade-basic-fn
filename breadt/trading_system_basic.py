@@ -3,6 +3,7 @@ import abc
 from .rabbitmq_connector import RabbitMQConnector
 import json
 
+
 class BreadtAccount:
     def __init__(self, money) -> None:
         self.available_money = money
@@ -129,7 +130,9 @@ class BreadtTradeOrder:
 
 
 class BreadtTradeContract:
-    def __init__(self, order_id, symbol, direct, price, traded, total, dt, status) -> None:
+    def __init__(
+        self, order_id, symbol, direct, price, traded, total, dt, status, remark
+    ) -> None:
         self.order_id = order_id
         self.symbol = symbol
         self.price = price
@@ -138,6 +141,7 @@ class BreadtTradeContract:
         self.direct = direct
         self.dt = dt
         self.status = status
+        self.remark = remark
 
 
 class BreadtOptionDirect(Enum):
@@ -149,13 +153,17 @@ class BreadtTradeTarget(Enum):
     ALL = 0
     SINGLE = 1
 
+
 class BreadtTaskStatus(Enum):
     INIT = 0
     PROCESS = 1
     COMPLETED = 2
 
+
 class BreadtTask(metaclass=abc.ABCMeta):
-    def __init__(self, name, account, tasktype, symbol, quanty, step, time, ttype) -> None:
+    def __init__(
+        self, name, account, tasktype, symbol, quanty, step, time, ttype
+    ) -> None:
         self.name = name
         self.account = account
         self.tasktype = tasktype
@@ -166,18 +174,18 @@ class BreadtTask(metaclass=abc.ABCMeta):
         self.ttype = ttype
         self.process = 0.0
         self.status = BreadtTaskStatus.INIT
-    
+
     def to_json(self):
         return {
-           "account": self.account,
+            "account": self.account,
             "tasktype": self.tasktype.name(),
             "symbol": self.symbol,
             "quanty": self.quanty,
             "turnover": self.turnover,
             "time": self.time,
-            "ttype": self.ttype.name()
+            "ttype": self.ttype.name(),
         }
-    
+
     @abc.abstractmethod
     def watch(self) -> None:
         pass
@@ -190,10 +198,12 @@ class BreadtTask(metaclass=abc.ABCMeta):
         connector = RabbitMQConnector(configfile)
         connector.send_message(exchange, routing_key, json.dumps(info))
 
+
 class BreadtTaskType(Enum):
     VENDOR = 0
     MANUAL = 1
     ALGOBYSIGNAL = 2
+
 
 class BreadtTaskTimeType(Enum):
     DAILY = 0

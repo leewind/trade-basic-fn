@@ -7,6 +7,7 @@ from .qmt_trader import QMTSignalDirect, QMTStockTrade, QMTCreditTrade
 
 _fetch_lock = SharedCounter()
 
+
 class QMTTraderV2:
     def __init__(
         self,
@@ -14,23 +15,33 @@ class QMTTraderV2:
         get_trade_detail_data,
         passorder,
         cancel_order=None,
-        name='qmt'
+        name="qmt",
     ) -> None:
         self.get_trade_detail_data = get_trade_detail_data
         self.passorder = passorder
         self.cancel = cancel_order
         self.ct = ContextInfo
         self.name = name
-    
+
     def order(
-        self, bar, symbol, price, quanty, account_type, account_id, is_debt_buy=False, name='qmt'
+        self,
+        bar,
+        symbol,
+        price,
+        quanty,
+        account_type,
+        account_id,
+        is_debt_buy=False,
+        name="qmt",
     ):
         _fetch_lock.incr()
         logger.info("QMTTrader 接收到下单信息 {}".format(account_type))
         if account_type.upper() == "STOCK":
             self.order_impl(bar, symbol, price, quanty, account_id, name)
         elif account_type.upper() == "CREDIT":
-            self.credit_order_impl(bar, symbol, price, quanty, account_id, is_debt_buy, name)
+            self.credit_order_impl(
+                bar, symbol, price, quanty, account_id, is_debt_buy, name
+            )
         _fetch_lock.decr()
 
     def order_impl(self, bar, symbol, price, quanty, account_id, name):
@@ -58,7 +69,9 @@ class QMTTraderV2:
         )
         logger.info("stock单次交易提交完成, 已被接收")
 
-    def credit_order_impl(self, bar, symbol, price, quanty, account_id, is_debt_buy, name):
+    def credit_order_impl(
+        self, bar, symbol, price, quanty, account_id, is_debt_buy, name
+    ):
         logger.info(
             "交易提交: {} price:{}, quanty:{}, symbol:{}, accountid:{}".format(
                 symbol, price, quanty, symbol, account_id
@@ -157,6 +170,7 @@ class QMTTraderV2:
                     "%Y%m%d %H%M%S",
                 ),
                 order.m_nOrderStatus,
+                order.m_strRemark,
             )
             orders.append(ocontract)
 
@@ -188,6 +202,7 @@ class QMTTraderV2:
                         "%Y%m%d %H%M%S",
                     ),
                     order.m_nOrderStatus,
+                    order.m_strRemark,
                 )
                 orders.append(ocontract)
 
