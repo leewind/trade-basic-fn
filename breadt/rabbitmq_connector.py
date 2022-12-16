@@ -8,7 +8,7 @@ class RabbitMQConnector:
         self.config.read(config_filename)
         self.connection = None
 
-    def _connect(self, heartbeat=3):
+    def _connect(self, heartbeat=60):
         credentials = pika.PlainCredentials(
             self.config["mq"]["user"], self.config["mq"]["password"]
         )
@@ -18,13 +18,13 @@ class RabbitMQConnector:
                 host=self.config["mq"]["host"],
                 credentials=credentials,
                 virtual_host=self.config["mq"]["vhost"],
-                heartbeat=0,
+                heartbeat=heartbeat,
             )
         )
         channel = connection.channel()
         return connection, channel
 
-    def send_message(self, exchange_name, routing_key, context, heartbeat=10) -> None:
+    def send_message(self, exchange_name, routing_key, context, heartbeat=60) -> None:
         self.connection, channel = self._connect(heartbeat)
         channel.basic_publish(
             exchange=exchange_name, routing_key=routing_key, body=context
@@ -32,7 +32,7 @@ class RabbitMQConnector:
 
         self.connection.close()
 
-    def start_consume(self, queue_name, callback, heartbeat=10):
+    def start_consume(self, queue_name, callback, heartbeat=60):
         """
         callback具体返回的参数, 可以参考这个example
         def callback(ch, method, properties, body):
