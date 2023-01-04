@@ -10,19 +10,24 @@ TUSHARE_KEY = "32edd62d8ec424bd141e2992ffd0725c51b246e205115188d1576229"
 ts.set_token(TUSHARE_KEY)
 pro = ts.pro_api()
 
-df_stock_a_list = pro.stock_basic(exchange='', list_status='L', fields='ts_code,symbol,name,area,industry,list_date')
-df_fund_list = pro.fund_basic(market='E')
-df_fund_list['symbol'] = df_fund_list['ts_code'].apply(lambda item: item.split('.')[0])
+df_stock_a_list = pro.stock_basic(
+    exchange="", list_status="L", fields="ts_code,symbol,name,area,industry,list_date"
+)
+df_fund_list = pro.fund_basic(market="E")
+df_fund_list["symbol"] = df_fund_list["ts_code"].apply(lambda item: item.split(".")[0])
 
-df_stock_list = pd.concat([df_stock_a_list[['ts_code', 'symbol']], df_fund_list[['ts_code', 'symbol']]])
+df_stock_list = pd.concat(
+    [df_stock_a_list[["ts_code", "symbol"]], df_fund_list[["ts_code", "symbol"]]]
+)
 
 
 def check_ts_symbol(symbol):
-    m = df_stock_list[df_stock_list['symbol']==symbol]
+    m = df_stock_list[df_stock_list["symbol"] == symbol]
     if m is None or len(m) == 0:
         return None
     else:
-        return m.iloc[0]['ts_code']
+        return m.iloc[0]["ts_code"]
+
 
 def is_in_trading_time() -> bool:
     ct = datetime.datetime.now()
@@ -54,6 +59,31 @@ def read_from_cache(dt) -> pd.DataFrame:
         df.to_csv(filename, index=False)
 
     return df
+
+
+def read_debt_list_from_cache(dt) -> pd.DataFrame:
+    filename = "debt_date.csv"
+    if not exists(filename):
+        df = pro.margin_target(mg_type="B")
+        df["dt"] = dt
+        df.to_csv(filename, index=False)
+        return df
+
+    df = pd.read_csv(filename)
+    if len(df[df["dt"] == dt]) == 0:
+        df = pro.margin_target(mg_type="B")
+        df["dt"] = dt
+        df.to_csv(filename, index=False)
+
+    return df
+
+
+def is_debt_buy(symbol) -> bool:
+    ct = datetime.datetime.now()
+    dt = ct.strftime("%Y%m%d")
+
+    df = read_debt_list_from_cache(dt)
+    return len(df[df["symbol"] == symbol]) > 0
 
 
 def is_in_trading_day() -> bool:
