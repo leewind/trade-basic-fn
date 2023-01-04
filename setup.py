@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="breadt",
-    version="0.1.57",
+    version="0.1.58",
     description="Basic Module For Quant",
     # packages=find_packages(include=["base", "trader"]),
     packages=["breadt"],

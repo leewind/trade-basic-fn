@@ -30,6 +30,7 @@ from .fmin import (
     get_code_volatility,
     get_1m_raw_pressure_and_support,
     check_ts_symbol,
+    is_debt_buy,
 )
 from .strategy import Strategy
 from .trade_executor import TradeExecutor
@@ -71,4 +72,5 @@ __all__ = [
     "QMTTraderV2",
     "check_ts_symbol",
     "RedisConnector",
+    "is_debt_buy",
 ]
