@@ -83,7 +83,7 @@ def is_debt_buy(symbol) -> bool:
     dt = ct.strftime("%Y%m%d")
 
     df = read_debt_list_from_cache(dt)
-    return len(df[df["symbol"] == symbol]) > 0
+    return len(df[df["ts_code"] == symbol]) > 0
 
 
 def is_in_trading_day() -> bool:
