@@ -70,6 +70,8 @@ def read_debt_list_from_cache(dt) -> pd.DataFrame:
         return df
 
     df = pd.read_csv(filename)
+    print(df)
+    print(len(df[df["dt"] == dt]))
     if len(df[df["dt"] == dt]) == 0:
         df = pro.margin_target(mg_type="B")
         df["dt"] = dt
