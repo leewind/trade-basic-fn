@@ -2,9 +2,9 @@ from setuptools import setup, find_packages
 
 setup(
     name="breadt",
-    version="0.1.63",
+    version="0.1.64",
     description="Basic Module For Quant",
     # packages=find_packages(include=["base", "trader"]),
     packages=["breadt"],
-    install_requires=["loguru", "pika", "pymysql", "redis", "sqlalchemy", "urllib", "pandas"],
+    install_requires=["loguru", "pika", "pymysql", "redis", "sqlalchemy", "pandas"],
 )
