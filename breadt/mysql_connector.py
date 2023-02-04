@@ -26,9 +26,7 @@ class MysqlConnector:
 
         # @refer https://docs.sqlalchemy.org/en/20/core/engines.html
         engine = create_engine(
-            "mysql+pymysql://{}:{}@{}:{}/{}".format(
-                config["db"]["user"], urllib.parse.quote_plus(config["db"]["password"]), config["db"]["host"], config["db"]["port"], database=config["db"]["database"]
-            ),
+            "mysql+pymysql://{}:{}@{}:{}/{}".format(config["db"]["user"], urllib.parse.quote_plus(config["db"]["password"]), config["db"]["host"], config["db"]["port"], config["db"]["database"]),
             pool_recycle=3600,
         )
         conn = engine.connect()
