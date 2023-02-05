@@ -1,6 +1,7 @@
 import pymysql
 import configparser
 from sqlalchemy import create_engine
+from sqlalchemy import text
 import urllib.parse
 import pandas as pd
 
@@ -42,4 +43,4 @@ class MysqlConnector:
         df.to_sql(con=self.create(config_filename), name=tb_name, if_exists="replace")
 
     def read_mysql_2_pandas(self, config_filename, sql):
-        return pd.read_sql(con=self.create(config_filename), sql=sql)
+        return pd.read_sql(con=self.create(config_filename), sql=text(sql))
