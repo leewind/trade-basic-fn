@@ -36,13 +36,25 @@ class MysqlConnector:
             ),
             pool_recycle=3600,
         )
-        conn = engine.connect()
-        return conn
+        return engine
 
     def pandas_save_2_mysql(self, config_filename, df, tb_name, exist="replace"):
+        engine = self.create(config_filename)
+        with engine.connect() as conn:
+            r = df.to_sql(
+                con=conn, name="milkt_stock_calendar", if_exists="append", index=False
+            )
+
+            conn.commit()
+            conn.close()
+
         df.to_sql(
             con=self.create(config_filename), name=tb_name, if_exists=exist, index=False
         )
 
     def read_mysql_2_pandas(self, config_filename, sql):
-        return pd.read_sql(con=self.create(config_filename), sql=text(sql))
+        engine = self.create(config_filename)
+        with engine.connect() as conn:
+            df = pd.read_sql(con=self.create(config_filename), sql=text(sql))
+            conn.close()
+            return df
