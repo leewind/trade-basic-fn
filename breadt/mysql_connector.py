@@ -39,8 +39,10 @@ class MysqlConnector:
         conn = engine.connect()
         return conn
 
-    def pandas_save_2_mysql(self, config_filename, df, tb_name):
-        df.to_sql(con=self.create(config_filename), name=tb_name, if_exists="replace")
+    def pandas_save_2_mysql(self, config_filename, df, tb_name, exist="replace"):
+        df.to_sql(
+            con=self.create(config_filename), name=tb_name, if_exists=exist, index=False
+        )
 
     def read_mysql_2_pandas(self, config_filename, sql):
         return pd.read_sql(con=self.create(config_filename), sql=text(sql))
