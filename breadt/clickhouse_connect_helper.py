@@ -13,6 +13,6 @@ class ClickHouseConnector:
             password=config["clickhouse"]["password"],
         )
 
-    def pandas_save_2_mysql(self, config_filename, sql):
+    def read_mysql_2_pandas(self, config_filename, sql):
         client = self.connect(config_filename)
         return client.query_df(sql)
