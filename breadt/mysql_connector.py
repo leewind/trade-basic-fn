@@ -36,11 +36,24 @@ class MysqlConnector:
             ),
             pool_recycle=3600,
         )
-        conn = engine.connect()
-        return conn
+        return engine
 
-    def pandas_save_2_mysql(self, config_filename, df, tb_name):
-        df.to_sql(con=self.create(config_filename), name=tb_name, if_exists="replace")
+    def pandas_save_2_mysql(self, config_filename, df, tb_name, exist="replace"):
+        engine = self.create(config_filename)
+        with engine.connect() as conn:
+            df.to_sql(
+                con=conn,
+                name=tb_name,
+                if_exists=exist,
+                index=False,
+            )
+
+            conn.commit()
+            conn.close()
 
     def read_mysql_2_pandas(self, config_filename, sql):
-        return pd.read_sql(con=self.create(config_filename), sql=text(sql))
+        engine = self.create(config_filename)
+        with engine.connect() as conn:
+            df = pd.read_sql(con=conn, sql=text(sql))
+            conn.close()
+            return df
