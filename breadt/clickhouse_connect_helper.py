@@ -20,4 +20,7 @@ class ClickHouseConnector:
     
     def read_2_pandas(self, config_filename, database, sql):
         client = self.connect(config_filename, database)
-        return client.query_df(sql)
+        df = client.query_df(sql)
+        client.close()
+
+        return df
