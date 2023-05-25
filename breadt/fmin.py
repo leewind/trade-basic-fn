@@ -31,8 +31,8 @@ def check_ts_symbol(symbol):
 
 def is_in_trading_time() -> bool:
     ct = datetime.datetime.now()
-    hm = int(ct.strftime("%H%M"))
-    if (hm >= 930 and hm <= 1130) or (hm >= 1300 and hm <= 1500):
+    hm = int(ct.strftime("%H%M%S"))
+    if (hm >= 92950 and hm <= 113000) or (hm >= 125950 and hm <= 150003):
         return True
 
     return False
