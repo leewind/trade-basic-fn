@@ -36,7 +36,6 @@ from .fmin import (
 from .strategy import Strategy
 from .trade_executor import TradeExecutor
 from .redis_connector import RedisConnector
-from .clickhouse_connect_helper import ClickHouseConnector
 
 __all__ = [
     "SharedCounter",
@@ -75,6 +74,5 @@ __all__ = [
     "check_ts_symbol",
     "RedisConnector",
     "is_debt_buy",
-    "ClickHouseConnector",
-    "is_after_sys_working_time"
+    "is_after_sys_working_time",
 ]
