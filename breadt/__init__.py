@@ -75,6 +75,6 @@ __all__ = [
     "check_ts_symbol",
     "RedisConnector",
     "is_debt_buy",
-    "ClickHouseConnector",
+    # "ClickHouseConnector",
     "is_after_sys_working_time",
 ]
