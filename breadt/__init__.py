@@ -36,7 +36,8 @@ from .fmin import (
 from .strategy import Strategy
 from .trade_executor import TradeExecutor
 from .redis_connector import RedisConnector
-from .clickhouse_connect_helper import ClickHouseConnector
+
+# from .clickhouse_connect_helper import ClickHouseConnector
 
 __all__ = [
     "SharedCounter",
