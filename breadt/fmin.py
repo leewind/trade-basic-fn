@@ -45,6 +45,16 @@ def is_after_trading_time() -> bool:
 
     return False
 
+def is_after_sys_working_time() -> bool:
+    ct = datetime.datetime.now()
+    if ct.hour > 15:
+        return True
+
+    if ct.hour > 14 and ct.minute > 5:
+        return True
+
+    return False
+
 
 def read_from_cache(dt) -> pd.DataFrame:
     filename = "trading_date.csv"

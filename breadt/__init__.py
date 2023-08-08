@@ -31,6 +31,7 @@ from .fmin import (
     get_1m_raw_pressure_and_support,
     check_ts_symbol,
     is_debt_buy,
+    is_after_sys_working_time,
 )
 from .strategy import Strategy
 from .trade_executor import TradeExecutor
@@ -75,4 +76,5 @@ __all__ = [
     "RedisConnector",
     "is_debt_buy",
     "ClickHouseConnector",
+    "is_after_sys_working_time",
 ]
