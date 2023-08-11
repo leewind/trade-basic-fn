@@ -4,25 +4,40 @@ import tushare as ts
 import pandas as pd
 import math
 import numpy as np
+import ClickHouseConnector
 
 TUSHARE_KEY = "32edd62d8ec424bd141e2992ffd0725c51b246e205115188d1576229"
-
 ts.set_token(TUSHARE_KEY)
 pro = ts.pro_api()
 
-df_stock_a_list = pro.stock_basic(
-    exchange="", list_status="L", fields="ts_code,symbol,name,area,industry,list_date"
-)
-df_fund_list = pro.fund_basic(market="E")
-df_fund_list["symbol"] = df_fund_list["ts_code"].apply(lambda item: item.split(".")[0])
 
-df_stock_list = pd.concat(
-    [df_stock_a_list[["ts_code", "symbol"]], df_fund_list[["ts_code", "symbol"]]]
-)
+class StockBasicInfo(object):
+    _instance = None
+
+    def __init__(self):
+        raise RuntimeError("Call instance() instead")
+
+    @classmethod
+    def instance(cls, config_name):
+        if cls._instance is None:
+            ck = ClickHouseConnector()
+
+            df_fund_list = ck.read_2_pandas(
+                config_name, "select ts_code,symbol from tushare_fund_basic"
+            )
+            df_stock_list = ck.read_2_pandas(
+                config_name, "select ts_code,symbol from tushare_stock_basic"
+            )
+
+            cls._instance = pd.concat([df_fund_list, df_stock_list])
+
+        return cls._instance
 
 
-def check_ts_symbol(symbol):
+def check_ts_symbol(symbol, config_name="config.ini"):
+    df_stock_list = StockBasicInfo.instance(config_name)
     m = df_stock_list[df_stock_list["symbol"] == symbol]
+
     if m is None or len(m) == 0:
         return None
     else:
@@ -44,6 +59,7 @@ def is_after_trading_time() -> bool:
         return True
 
     return False
+
 
 def is_after_sys_working_time() -> bool:
     ct = datetime.datetime.now()
@@ -153,7 +169,6 @@ def compute_volatility(contract):
 
 
 def get_code_volatility(ts_code, end_date, length):
-
     start_date = "20210101"
 
     if ("1" in ts_code and ts_code.index("1") == 0) or (

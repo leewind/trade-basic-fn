@@ -13,5 +13,6 @@ setup(
         "redis",
         "sqlalchemy",
         "pandas",
+        "clickhouse-connect",
     ],
 )
