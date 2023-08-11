@@ -4,7 +4,7 @@ import tushare as ts
 import pandas as pd
 import math
 import numpy as np
-import ClickHouseConnector
+from clickhouse_connect_helper import ClickHouseConnector
 
 TUSHARE_KEY = "32edd62d8ec424bd141e2992ffd0725c51b246e205115188d1576229"
 ts.set_token(TUSHARE_KEY)
