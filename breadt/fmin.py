@@ -23,10 +23,10 @@ class StockBasicInfo(object):
             ck = ClickHouseConnector()
 
             df_fund_list = ck.read_2_pandas(
-                config_name, "select ts_code,symbol from tushare_fund_basic"
+                config_name, 'quote', "select ts_code,symbol from tushare_fund_basic"
             )
             df_stock_list = ck.read_2_pandas(
-                config_name, "select ts_code,symbol from tushare_stock_basic"
+                config_name, 'quote', "select ts_code,symbol from tushare_stock_basic"
             )
 
             cls._instance = pd.concat([df_fund_list, df_stock_list])
