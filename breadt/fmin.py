@@ -33,6 +33,25 @@ class StockBasicInfo(object):
 
         return cls._instance
 
+class StockCalendarInfo(object):
+    _instance = None
+
+    def __init__(self):
+        raise RuntimeError("Call instance() instead")
+
+    @classmethod
+    def instance(cls, config_name):
+        if cls._instance is None:
+            ck = ClickHouseConnector()
+
+            df_cal = ck.read_2_pandas(
+                config_name, 'quote', "select * from milkt_stock_calendar"
+            )
+
+            cls._instance = df_cal
+
+        return cls._instance
+
 
 def check_ts_symbol(symbol, config_name="config.ini"):
     df_stock_list = StockBasicInfo.instance(config_name)
@@ -75,14 +94,17 @@ def is_after_sys_working_time() -> bool:
 def read_from_cache(dt) -> pd.DataFrame:
     filename = "trading_date.csv"
     if not exists(filename):
-        df = pro.trade_cal(exchange="", start_date=dt, end_date=dt)
-        df.to_csv(filename, index=False)
+        # df = pro.trade_cal(exchange="", start_date=dt, end_date=dt)
+        # df.to_csv(filename, index=False)
+        
+        StockCalendarInfo.instance("config.ini").to_csv(filename, index=False)
         return df
 
     df = pd.read_csv(filename)
     if len(df[df["cal_date"] == dt]) == 0:
-        df = pro.trade_cal(exchange="", start_date=dt, end_date=dt)
-        df.to_csv(filename, index=False)
+        # df = pro.trade_cal(exchange="", start_date=dt, end_date=dt)
+        # df.to_csv(filename, index=False)
+        StockCalendarInfo.instance("config.ini").to_csv(filename, index=False)
 
     return df
 
