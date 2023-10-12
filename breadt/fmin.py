@@ -143,6 +143,9 @@ def is_in_trading_day() -> bool:
     if df is None or len(df) == 0:
         return False
 
+    print(df)
+    print(dt)
+    print(df[df["cal_date"] == dt])
     return df[df["cal_date"] == dt].iloc[0]["is_open"] > 0
 
 
