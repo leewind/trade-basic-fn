@@ -97,8 +97,8 @@ def read_from_cache(dt) -> pd.DataFrame:
         # df = pro.trade_cal(exchange="", start_date=dt, end_date=dt)
         # df.to_csv(filename, index=False)
         
-        StockCalendarInfo.instance("config.ini").to_csv(filename, index=False)
-        return df
+        return StockCalendarInfo.instance("config.ini").to_csv(filename, index=False)
+        # return df
 
     df = pd.read_csv(filename)
     if len(df[df["cal_date"] == dt]) == 0:
