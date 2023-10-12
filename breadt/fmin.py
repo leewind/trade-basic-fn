@@ -45,7 +45,7 @@ class StockCalendarInfo(object):
             ck = ClickHouseConnector()
 
             df_cal = ck.read_2_pandas(
-                config_name, 'quote', "select * from milkt_stock_calendar"
+                config_name, 'stock', "select * from milkt_stock_calendar"
             )
 
             cls._instance = df_cal
