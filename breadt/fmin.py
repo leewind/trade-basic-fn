@@ -106,6 +106,7 @@ def read_from_cache(dt) -> pd.DataFrame:
         # df.to_csv(filename, index=False)
         StockCalendarInfo.instance("config.ini").to_csv(filename, index=False)
 
+    df['cal_date'] = df['cal_date'].astype(str)
     return df
 
 
