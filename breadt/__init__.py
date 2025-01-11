@@ -38,6 +38,11 @@ from .trade_executor import TradeExecutor
 from .redis_connector import RedisConnector
 
 from .clickhouse_connect_helper import ClickHouseConnector
+from .algo.kalman_filter import (
+    get_kalman_filter_state,
+    get_kalman_filter_spread,
+    cal_half_life,
+)
 
 __all__ = [
     "SharedCounter",
@@ -78,4 +83,7 @@ __all__ = [
     "is_debt_buy",
     "ClickHouseConnector",
     "is_after_sys_working_time",
+    "get_kalman_filter_state",
+    "get_kalman_filter_spread",
+    "cal_half_life",
 ]

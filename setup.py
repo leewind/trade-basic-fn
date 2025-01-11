@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="breadt",
-    version="0.1.92",
+    version="0.2.1",
     description="Basic Module For Quant",
     # packages=find_packages(include=["base", "trader"]),
     packages=["breadt"],
@@ -14,5 +14,9 @@ setup(
         "sqlalchemy",
         "pandas",
         "clickhouse-connect",
+        "statsmodels",
+        "pykalman",
+        "tushare",
+        "akshare",
     ],
 )
