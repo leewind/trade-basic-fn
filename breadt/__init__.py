@@ -44,6 +44,8 @@ from .algo_kalman_filter import (
     cal_half_life,
 )
 
+from .algo_markov_regression import get_pval_rolling_window, markov_regression
+
 __all__ = [
     "SharedCounter",
     "Trader",
@@ -86,4 +88,6 @@ __all__ = [
     "get_kalman_filter_state",
     "get_kalman_filter_spread",
     "cal_half_life",
+    "get_pval_rolling_window",
+    "markov_regression",
 ]

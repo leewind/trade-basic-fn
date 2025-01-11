@@ -15,6 +15,26 @@ def get_kalman_filter_state(plus, minus):
     tuple: A tuple containing:
         - state_means (np.ndarray): The estimated state means from the Kalman filter.
         - state_covs (np.ndarray): The estimated state covariances from the Kalman filter.
+
+
+    kf = KalmanFilter(
+        transition_matrices=[[1, delta_t], [0, 1]], #系统矩阵
+        transition_offsets=[0, 0],#类似于输入矩阵与输入的乘积，注意格式，
+        #如有三个状态量就写成[0, 0, 0]
+        transition_covariance=[[0, 0], [0, 10]],#模型协方差
+        observation_matrices=[1, 0],#观测矩阵，仅有一个观测量
+        observation_offsets=[0],#类似，因为只有一个观测量
+        observation_covariance=[10],#观测协方差
+        initial_state_mean = [0, 0],#以下两项用于定义初始的状态
+        initial_state_covariance = [[1, 0], [0, 1]]
+        em_vars: List[str] = ['transition_matrices', 'observation_matrices',
+                            'transition_offsets', 'observation_offsets',
+                            'transition_covariance', 'observation_covariance',
+                            'initial_state_mean','initial_state_covariance'],
+        #em_vars用于定义应用em算法时，对那些参数进行训练
+        #如:em_vars=['transition_covariance','observation_covariance']
+        #代表仅对这两个参数进行训练
+    )
     """
     obs_mat = sm.add_constant(np.log(minus).values, prepend=False)[:, np.newaxis]
     trans_cov = 1e-5 / (1 - 1e-5) * np.eye(2)
