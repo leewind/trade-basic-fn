@@ -44,18 +44,20 @@ def get_pval_rolling_window(pval, stime, regime=2, rolling_window=36):
     pd.Series: A pandas Series with the smoothed regimes, indexed by the original time indices.
     """
 
-    m = pd.DataFrame(data={"pval": pval}, index=stime)
+    m = pd.Series(data=list(pval), index=stime)
 
     #  applies a transformation to the p-value to make it more useful for the markov switching model
-    pv = (m["pval"] + 0.6) ** 2
+    pv = (m + 0.6) ** 2
 
     #  does first round of markov switching model fitting;
     #  either 2 regimes or 3. 3 is for the middle 'high variance but nothing's really happening' tier,
-    regimes, mr_model = markov_regression(pv, regime)
+    regimes, mr_model = markov_regression(pv, k_regimes=regime)
 
     #   applies rolling mean smoothing and runs it through a second regime fitting, this time with only two regimes
     ms = regimes.rolling(rolling_window).mean()
-    smoothed_regimes, smoothed_mr_model = markov_regression(ms.dropna(), regime)
+    smoothed_regimes, smoothed_mr_model = markov_regression(
+        ms.dropna(), k_regimes=regime
+    )
 
     smoothed_regimes_lag_removed = pd.Series(
         data=smoothed_regimes.values,
