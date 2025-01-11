@@ -38,7 +38,7 @@ from .trade_executor import TradeExecutor
 from .redis_connector import RedisConnector
 
 from .clickhouse_connect_helper import ClickHouseConnector
-from .algo.kalman_filter import (
+from .algo_kalman_filter import (
     get_kalman_filter_state,
     get_kalman_filter_spread,
     cal_half_life,
