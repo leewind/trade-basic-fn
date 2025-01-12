@@ -74,17 +74,19 @@ def get_kalman_filter_spread(plus, minus):
     return np.log(plus) - np.log(minus) * state_means[:, 0] - state_means[:, 1]
 
 
-def cal_half_life(spread):
+def cal_half_life(spread, seed=2):
     """
-    Calculate the half-life of mean reversion for a given spread series.
+    Calculate the half-life of a mean-reverting time series.
 
-    The half-life is the time it takes for a spread to revert halfway back to its mean.
+    The half-life is the time it takes for a time series to revert halfway back to its mean.
+    This function uses an Ordinary Least Squares (OLS) regression to estimate the half-life.
 
     Parameters:
-    spread (pd.Series): A pandas Series representing the spread.
+    spread (pd.Series): The time series data for which the half-life is to be calculated.
+    seed (int, optional): The base of the logarithm used in the calculation. Default is 2.
 
     Returns:
-    int: The calculated half-life of mean reversion. If the calculated half-life is less than or equal to 0, it returns 1.
+    int: The calculated half-life of the time series. If the calculated half-life is less than or equal to 0, it returns 1.
     """
     spread_lag = spread.shift(1)
     spread_lag.iloc[0] = spread_lag.iloc[1]
@@ -93,7 +95,7 @@ def cal_half_life(spread):
     spread_lag2 = sm.add_constant(spread_lag)
     model = sm.OLS(spread_ret, spread_lag2)
     res = model.fit()
-    halflife = int(round(-np.log(2) / res.params[1], 0))
+    halflife = int(round(-np.log(seed) / res.params[1], 0))
     if halflife <= 0:
         halflife = 1
     return halflife
