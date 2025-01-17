@@ -30,7 +30,7 @@ def markov_regression(t, freq="2h", k_regimes=3):
     return regimes.reindex(t.index), mr_fitted
 
 
-def get_pval_rolling_window(pval, stime, regime=2, rolling_window=36):
+def get_pval_rolling_window(pval, stime, regime=2, rolling_window=36, freq="2h"):
     """
     Applies a Markov switching model to p-values with a rolling window smoothing.
 
@@ -51,12 +51,12 @@ def get_pval_rolling_window(pval, stime, regime=2, rolling_window=36):
 
     #  does first round of markov switching model fitting;
     #  either 2 regimes or 3. 3 is for the middle 'high variance but nothing's really happening' tier,
-    regimes, mr_model = markov_regression(pv, k_regimes=regime)
+    regimes, mr_model = markov_regression(pv, freq=freq, k_regimes=regime)
 
     #   applies rolling mean smoothing and runs it through a second regime fitting, this time with only two regimes
     ms = regimes.rolling(rolling_window).mean()
     smoothed_regimes, smoothed_mr_model = markov_regression(
-        ms.dropna(), k_regimes=regime
+        ms.dropna(), freq=freq, k_regimes=regime
     )
 
     smoothed_regimes_lag_removed = pd.Series(
