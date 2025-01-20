@@ -46,6 +46,8 @@ from .algo_kalman_filter import (
 
 from .algo_markov_regression import get_pval_rolling_window, markov_regression
 
+from .milkt_coin_data_fetch import get_coin_data_by_ct, aggregate_data_by_ct
+
 __all__ = [
     "SharedCounter",
     "Trader",
@@ -90,4 +92,6 @@ __all__ = [
     "cal_half_life",
     "get_pval_rolling_window",
     "markov_regression",
+    "get_coin_data_by_ct",
+    "aggregate_data_by_ct",
 ]
