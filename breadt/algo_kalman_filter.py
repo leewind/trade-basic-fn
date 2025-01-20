@@ -3,7 +3,7 @@ from pykalman import KalmanFilter
 import numpy as np
 
 
-def get_kalman_filter_state(plus, minus):
+def get_kalman_filter_state(plus, minus, observation_convariance=0.5):
     """
     Applies a Kalman filter to the given time series data.
 
@@ -46,7 +46,7 @@ def get_kalman_filter_state(plus, minus):
         initial_state_covariance=np.ones((2, 2)),
         transition_matrices=np.eye(2),
         observation_matrices=obs_mat,
-        observation_covariance=0.5,
+        observation_covariance=observation_convariance,
         transition_covariance=0.000001 * np.eye(2),
     )
 
