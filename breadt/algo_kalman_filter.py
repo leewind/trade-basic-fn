@@ -54,7 +54,7 @@ def get_kalman_filter_state(plus, minus, observation_convariance=0.5):
     return state_means, state_covs
 
 
-def get_kalman_filter_spread(plus, minus):
+def get_kalman_filter_spread(plus, minus, observation_convariance=0.5):
     """
     Calculate the spread using the Kalman filter.
 
@@ -70,7 +70,9 @@ def get_kalman_filter_spread(plus, minus):
     Returns:
         np.ndarray: The calculated spread.
     """
-    state_means, state_covs = get_kalman_filter_state(plus, minus)
+    state_means, state_covs = get_kalman_filter_state(
+        plus, minus, observation_convariance=observation_convariance
+    )
     return np.log(plus) - np.log(minus) * state_means[:, 0] - state_means[:, 1]
 
 
