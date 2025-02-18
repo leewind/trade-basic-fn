@@ -1,5 +1,6 @@
 import clickhouse_connect
 import pandas as pd
+import datetime
 
 
 def get_coin_data_by_ct(
@@ -81,3 +82,35 @@ def aggregate_data_by_ct(df, freq="15min", base=0, mode="crypto"):
         aggregated_df = aggregated_df.between_time("09:30", "15:00")
     aggregated_df = aggregated_df[aggregated_df.close.notnull()]
     return aggregated_df
+
+def fetch_and_normalize_coin_data(symbol, freq='5min', start_day_gap=30, end_day_gap=0) -> pd.DataFrame:
+    """
+    Fetches and normalizes cryptocurrency data for a given symbol.
+    Parameters:
+    symbol (str): The symbol of the cryptocurrency to fetch data for (e.g., 'BTC').
+    freq (str, optional): The frequency of the data aggregation (default is '5min').
+    start_day_gap (int, optional): The number of days before today to start fetching data (default is 30).
+    end_day_gap (int, optional): The number of days before today to stop fetching data (default is 0).
+    Returns:
+    pd.DataFrame: A DataFrame containing the normalized and aggregated cryptocurrency data with additional moving averages.
+    """
+    startdate = datetime.datetime.now() - datetime.timedelta(days=start_day_gap)
+    enddate = datetime.datetime.now() - datetime.timedelta(days=end_day_gap)
+
+    dforigin = get_coin_data_by_ct(f'{symbol}_USDT', startdate.timestamp(), freq="1m", host="117.131.54.182")
+    dforigin = dforigin[dforigin.index < enddate]
+
+    dfo = aggregate_data_by_ct(dforigin, freq=freq, base=0, mode="crypto").reset_index()
+
+    max_price = dfo.high.max()
+    dfo.close = dfo.close / max_price
+    dfo.open = dfo.open / max_price
+    dfo.high = dfo.high / max_price
+    dfo.low = dfo.low / max_price
+
+    dfo['ma10'] = dfo.close.rolling(window=10).mean()
+    dfo['ma20'] = dfo.close.rolling(window=20).mean()
+    dfo['ma30'] = dfo.close.rolling(window=30).mean()
+
+    dfu = dfo[50:].copy().reset_index(drop=True)
+    return dfu

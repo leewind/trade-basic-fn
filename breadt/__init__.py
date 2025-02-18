@@ -38,7 +38,7 @@ from .trade_executor import TradeExecutor
 from .redis_connector import RedisConnector
 
 from .clickhouse_connect_helper import ClickHouseConnector
-from .milkt_coin_data_fetch import get_coin_data_by_ct, aggregate_data_by_ct
+from .milkt_coin_data_fetch import get_coin_data_by_ct, aggregate_data_by_ct,fetch_and_normalize_coin_data
 
 from .algo_kalman_filter import AlgoKalmanFilterProcessor
 from .algo_markov_regression import AlgoMarkovRegressionProcessor
@@ -86,6 +86,7 @@ __all__ = [
     
     "get_coin_data_by_ct",
     "aggregate_data_by_ct",
+    "fetch_and_normalize_coin_data",
 
     "AlgoKalmanFilterProcessor",
     "AlgoMarkovRegressionProcessor",
