@@ -38,15 +38,11 @@ from .trade_executor import TradeExecutor
 from .redis_connector import RedisConnector
 
 from .clickhouse_connect_helper import ClickHouseConnector
-from .algo_kalman_filter import (
-    get_kalman_filter_state,
-    get_kalman_filter_spread,
-    cal_half_life,
-)
-
-from .algo_markov_regression import get_pval_rolling_window, markov_regression
-
 from .milkt_coin_data_fetch import get_coin_data_by_ct, aggregate_data_by_ct
+
+from .algo_kalman_filter import AlgoKalmanFilterProcessor
+from .algo_markov_regression import AlgoMarkovRegressionProcessor
+from .algo_base_etl import AlgorithmBaseETL
 
 __all__ = [
     "SharedCounter",
@@ -87,11 +83,11 @@ __all__ = [
     "is_debt_buy",
     "ClickHouseConnector",
     "is_after_sys_working_time",
-    "get_kalman_filter_state",
-    "get_kalman_filter_spread",
-    "cal_half_life",
-    "get_pval_rolling_window",
-    "markov_regression",
+    
     "get_coin_data_by_ct",
     "aggregate_data_by_ct",
+
+    "AlgoKalmanFilterProcessor",
+    "AlgoMarkovRegressionProcessor",
+    "AlgorithmBaseETL",
 ]
