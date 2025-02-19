@@ -103,9 +103,7 @@ def fetch_and_normalize_coin_data(
     dforigin = get_coin_data_by_ct(
         f"{symbol}_USDT", startdate.timestamp(), freq="1m", host="117.131.54.182"
     )
-    dforigin = dforigin[
-        dforigin.ctime < int((enddate + datetime.timedelta(minutes=1)).timestamp())
-    ]
+    dforigin = dforigin[dforigin.ctime < int((enddate).timestamp())]
 
     dfo = aggregate_data_by_ct(dforigin, freq=freq, base=0, mode="crypto").reset_index()
 
