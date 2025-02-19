@@ -83,7 +83,10 @@ def aggregate_data_by_ct(df, freq="15min", base=0, mode="crypto"):
     aggregated_df = aggregated_df[aggregated_df.close.notnull()]
     return aggregated_df
 
-def fetch_and_normalize_coin_data(symbol, freq='5min', start_day_gap=30, end_day_gap=0) -> pd.DataFrame:
+
+def fetch_and_normalize_coin_data(
+    symbol, freq="5min", start_day_gap=30, end_day_gap=0
+) -> pd.DataFrame:
     """
     Fetches and normalizes cryptocurrency data for a given symbol.
     Parameters:
@@ -97,8 +100,10 @@ def fetch_and_normalize_coin_data(symbol, freq='5min', start_day_gap=30, end_day
     startdate = datetime.datetime.now() - datetime.timedelta(days=start_day_gap)
     enddate = datetime.datetime.now() - datetime.timedelta(days=end_day_gap)
 
-    dforigin = get_coin_data_by_ct(f'{symbol}_USDT', startdate.timestamp(), freq="1m", host="117.131.54.182")
-    dforigin = dforigin[dforigin.index < enddate]
+    dforigin = get_coin_data_by_ct(
+        f"{symbol}_USDT", startdate.timestamp(), freq="1m", host="117.131.54.182"
+    )
+    dforigin = dforigin[dforigin.ctime < int(enddate.timestamp())]
 
     dfo = aggregate_data_by_ct(dforigin, freq=freq, base=0, mode="crypto").reset_index()
 
@@ -108,9 +113,9 @@ def fetch_and_normalize_coin_data(symbol, freq='5min', start_day_gap=30, end_day
     dfo.high = dfo.high / max_price
     dfo.low = dfo.low / max_price
 
-    dfo['ma10'] = dfo.close.rolling(window=10).mean()
-    dfo['ma20'] = dfo.close.rolling(window=20).mean()
-    dfo['ma30'] = dfo.close.rolling(window=30).mean()
+    dfo["ma10"] = dfo.close.rolling(window=10).mean()
+    dfo["ma20"] = dfo.close.rolling(window=20).mean()
+    dfo["ma30"] = dfo.close.rolling(window=30).mean()
 
     dfu = dfo[50:].copy().reset_index(drop=True)
     return dfu
