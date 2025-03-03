@@ -108,6 +108,7 @@ def fetch_and_normalize_coin_data(
     dfo = aggregate_data_by_ct(dforigin, freq=freq, base=0, mode="crypto").reset_index()
 
     max_price = dfo.high.max()
+    dfo["oclose"] = dfo.close
     dfo.close = dfo.close / max_price
     dfo.open = dfo.open / max_price
     dfo.high = dfo.high / max_price
